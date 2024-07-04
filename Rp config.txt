@@ -1,0 +1,25 @@
+https://www.youtube.com/watch?v=ODhGNe0s4lI
+
+sudo apt install tasksel
+
+sudo apt install task
+
+ sudo apt install slim
+
+cat /etc/X11/default-display-manager
+
+
+pi@ubuntu:~$ tasksel   ติเตั้ง ubuntu destop
+
+sudo apt install ubuntu-desktop  กรณีไม่ขึ้นในหน้าต่าง ให้ลงผ่าน terminal ได้เลย
+
+sudo apt install tigervnc-standalone-server
+
+vncserver -localhost no
+
+
+ 
+ 
+vncserver -list
+
+vncserver  -kill :1

@@ -1,0 +1,10 @@
+
+1. sudo systemctl status grafana-server
+
+2.sudo ss -tuln | grep 3000
+
+
+http://192.168.1.109:8086  ของ influxDB กรอกใน Grafana
+
+1. dashboard   new folder   ตั้งชื่อตามที่เราต้องการ
+2. new dasnboard

@@ -1,0 +1,41 @@
+#################
+uninstall  maria db
+sudo apt --fix-broken install
+sudo apt-get remove mariadb-server -y
+###########
+
+
+
+1. https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-22-04
+
+
+2. รหัสที่ตั้งคือ sompoch  ล่าสุด user :root
+
+
+ MariaDB [(none)]> ALTER USER 'root'@'localhost' IDENTIFIED BY 'sompoch';
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]> SELECT user, host, password FROM mysql.user WHERE user = 'root';
++------+-----------+-------------------------------------------+
+| User | Host      | Password                                  |
++------+-----------+-------------------------------------------+
+| root | localhost | *7862C5CD7F1CA267785FD492080CF738630A91CB |
++------+-----------+-------------------------------------------+
+1 row in set (0.002 sec)
+
+
+#######################################################################
+ติดตั้ง Adminer  
+1.https://www.youtube.com/watch?v=r4keak825B4
+
+sudo apt install adminer
+
+sudo ln -s /etc/apache2/conf-available/adminer.conf /etc/apache2/conf-enabled/
+
+sudo apachectl configtest
+
+sudo systemctl restart apache2
+
+จากนั้นเข้าสู่ระบบ  http://192.168.1.109/adminer/
+
+เปิดขึ้นมา ต้องใช้ localhost  ถึงจะเปิดได้

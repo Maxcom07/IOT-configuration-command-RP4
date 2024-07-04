@@ -1,0 +1,9 @@
+1.sudo apt install build-essential git
+
+2.bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
+
+3. npm install node-red-contrib-influxdb
+
+4.sudo systemctl enable nodered.service   สตาร์ท auto ถ้า reboot 
+
+5.sudo systemctl start nodered.service

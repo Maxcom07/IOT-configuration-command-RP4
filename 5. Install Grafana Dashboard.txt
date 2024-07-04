@@ -1,0 +1,18 @@
+- ถอนการติดตั้ง Grafana Version ที่มีอยู่
+sudo apt-get remove --auto-remove grafana
+
+- ติดตั้ง adduser
+sudo apt-get install -y adduser libfontconfig1
+
+- ดาวน์โหลด package grafana
+wget https://dl.grafana.com/oss/release/grafana_9.4.7_arm64.deb
+
+- ติดตั้ง grafana
+sudo dpkg -i grafana_9.4.7_arm64.deb
+
+- ตั้งค่า service ของ grafana
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable grafana-server
+sudo /bin/systemctl start grafana-server
+
+sudo systemctl status grafana-server

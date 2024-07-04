@@ -1,0 +1,34 @@
+
+การเซ็ท static ip address wifi Rp4 ต้องต่อจอ monitor & keyboard & mouse  เพื่อ ทำการ fix static ip address 
+1. เปิดไฟล์ Netplan ด้วยโปรแกรมแก้ไข    sudo nano /etc/netplan/50-cloud-init.yaml
+2. หลังจาก safe ไฟล์แล้ว  ให้ทำการ apply  ด้วย คำสั่งนี้        sudo netplan apply  
+3. ip a   เช็ค status ip
+
+remark : ถ้าทำการเปลี่ยน static ip ผ่าน ssh นั้น จะไม่ได้เพราะ ช่วงที่ทำการบันทึกจะไม่ได้บันทึก เพราะ สัญญาณ internet ตัดก่อนทำให้ ไม่สามารถทำได้
+โดยการ SSH ต้องต่อจอ monitor เท่านั้น 
+
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlan0:
+      dhcp4: false
+      dhcp6: false
+      addresses: 
+        - 192.168.80.109/24
+      nameservers:
+        addresses: 
+          - 192.168.1.1        #มาจากค่า defalt gateway  router
+          - 8.8.8.8
+      access-points:
+        "SompochWiFi_2.4G_":
+          password: "DexTran745"
+      routes:
+        - to: default
+          via: 192.168.1.1     #มาจากค่า defalt gateway  router
+
+
+
+
+install ubuntu raspberrry pi
+https://www.youtube.com/watch?v=Cw_34fuve6E

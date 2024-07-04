@@ -1,0 +1,84 @@
+sudo apt update
+
+sudo apt install mosquitto mosquitto-clients
+
+echo "sompoch:45301074EE" > sompochfile             สร้างรหัสผ่านและชื่อไฟล์ที่บันทึกใว้ 
+
+cat  sompochfile  ดูไฟล์
+
+mosquitto_passwd -U sompochfile   แปลงไฟล์รหัสผ่านให้อยู่ในรูปแบบที่ต้องการ: Mosquitto 
+
+cat  sompochfile  ดูไฟล์ที่แปลงแล้ว
+
+sudo mv sompochfile /etc/mosquitto/      ย้ายไฟล์รหัสผ่านไปยังตำแหน่ง (directory on Rp4 )ที่ปลอดภัย: ย้ายไฟล์รหัสผ่านที่สร้างขึ้นไปยังตำแหน่งที่ Mosquitto เข้าถึงได้แต่ไม่ใช่ตำแหน่งที่เข้าถึงได้โดยสาธารณะ
+
+
+ตั้งค่า Mosquitto ให้ใช้ไฟล์รหัสผ่านนี้:  
+เปิดไฟล์การตั้งค่า Mosquitto:
+sudo nano /etc/mosquitto/conf.d/default.conf
+
+allow_anonymous false
+password_file /etc/mosquitto/sompochfile
+
+sudo systemctl restart mosquitto    รีสตาร์ท Mosquitto
+
+sudo systemctl status mosquitto   ตรวจสอบสถานะ Mosquitto
+
+
+sudo systemctl stop mosquitto    เปิด new terminal
+
+sudo systemctl start mosquitto
+
+sudo systemctl disable mosquitto    ถ้าต้องการให้ Mosquitto ไม่ทำงานขณะเปิดเครื่องใหม่ (reboot) 
+
+sudo systemctl enable mosquitto    หากต้องการเปิดใช้งาน Mosquitto ให้ทำงานโดยอัตโนมัติในการบูตทุกครั้ง 
+
+
+sudo ufw allow 1883   เปิดพอร์ต 1883 (พอร์ต MQTT ที่ใช้โดยทั่วไป):
+
+sudo ufw allow 8883   เปิดพอร์ต 8883 (พอร์ต MQTT ที่ใช้สำหรับการเชื่อมต่อที่เข้ารหัส SSL/TLS):
+
+
+
+
+new method ###############################################################
+
+- แก้ไข config file ของ mosquitto 
+sudo nano /etc/mosquitto/mosquitto.conf
+
+
+- เลื่อนไปที่บรรทัดล่างสุด (โดยต้องใช้แป้นพิมพ์เท่านั้น)
+เพิ่มข้อความดังต่อไปนี้ไว้ต่อท้าย
+
+# default listener
+port 1883
+# additional listener for websockets
+listener 9001
+protocol websockets
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+
+แล้วทำการบันทักด้วย 
+(Ctrl + X แล้วต่อด้วย Y แล้วต่อด้วย Enter)
+
+
+- ทำการตั้งค่า username และ password โดยพิมพ์คำสั่ง 
+sudo mosquitto_passwd -c /etc/mosquitto/passwd "sompoch"
+
+
+- ให้ mosquitto เริ่มทำงานใหม่ โดยพิมพ์คำสั่ง
+sudo service mosquitto restart
+
+
+- ตรวจสอบสถานะการทำงาน โดยพิมพ์คำสั่ง
+service mosquitto status
+
+
+pi@ubuntu:~$ mosquitto_sub -u sompoch  -P 45301074EE -v -t "#"
+
+
+mosquitto_pub -h 192.168.1.109 -u sompoch -P 45301074EE -t "test/topic" -m "Hello MQTT"   ทดสอบว่า สมัครแล้วใช้ได้ไหม
+
+
+pi@ubuntu:~$ mosquitto_pub -h 192.168.1.109 -u sompoch -P 45301074EE -t "test/topic" -m "Hello MQTT" 
+

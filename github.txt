@@ -1,0 +1,8 @@
+git config --global user.email "wutiya2008@hotmail.com"
+git config --global user.name "Maxcom07"
+
+git add .
+
+git commit -m "ข้อความอธิบายการเปลี่ยนแปลง"
+
+git push -u origin main  แล้วไฟล์จะอัพเดท ที่เว็บ git hub

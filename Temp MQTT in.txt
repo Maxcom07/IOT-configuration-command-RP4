@@ -1,0 +1,30 @@
+
+
+
+##
+
+void senTemptoNodered() {
+ 
+  // สร้าง JSON document
+  StaticJsonDocument<48> doc;
+  doc["temperature"] = temp;
+
+  char buffer[48];
+  serializeJson(doc, buffer);
+
+  // ส่งข้อมูลผ่าน MQTT
+  client.publish("Watertank/Temp", buffer);
+}
+
+ unsigned long currentMillis = millis();
+  // Every X number of seconds (interval = 10 seconds) publish a new MQTT message
+  if (currentMillis - previousMillis >= 1000) {
+    previousMillis = currentMillis;
+    // Request temperature readings
+    sensors.requestTemperatures();
+    // Read temperature in Celsius degrees
+    float tempC = sensors.getTempCByIndex(0); 
+    //client.publish("Watertank/Temp","sensors ");
+    //client.publish("Watertank/Level","Level ");
+    senTemptoNodered();
+
